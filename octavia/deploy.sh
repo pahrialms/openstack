@@ -7,10 +7,10 @@ echo "octavia_certs_organizational_unit: Octavia" | sudo tee -a /etc/kolla/globa
 # generate certificate for octavia
 kolla-ansible octavia-certificates
 
-OCTAVIA_MGMT_SUBNET=172.18.241.0/24
-OCTAVIA_MGMT_SUBNET_START=172.18.241.10
-OCTAVIA_MGMT_SUBNET_END=172.18.241.254
-OCTAVIA_MGMT_HOST_IP=172.18.241.1
+OCTAVIA_MGMT_SUBNET=172.16.10.0/24
+OCTAVIA_MGMT_SUBNET_START=172.16.10.10
+OCTAVIA_MGMT_SUBNET_END=172.16.10.254
+OCTAVIA_MGMT_HOST_IP=172.16.10.1
 OCTAVIA_MGMT_VLAN_ID=11
 
 # add extra configurations octavia at globals file
@@ -36,7 +36,7 @@ EOT
 sudo tee /usr/local/bin/veth-lbaas.sh << EOT
 #!/bin/bash
 sudo ip link add v-lbaas-vlan type veth peer name v-lbaas
-sudo ip addr add 172.18.241.2/24 dev v-lbaas
+sudo ip addr add 172.16.10.2/24 dev v-lbaas
 sudo ip link set v-lbaas-vlan up
 sudo ip link set v-lbaas up
 EOT
@@ -62,7 +62,7 @@ br-ex v-lbaas-vlan tag=$OCTAVIA_MGMT_VLAN_ID
 sudo tee /usr/local/bin/veth-lbaas.sh << EOT
 #!/bin/bash
 sudo ip link add v-lbaas-vlan type veth peer name v-lbaas
-sudo ip addr add 172.18.241.3 dev v-lbaas
+sudo ip addr add 172.16.10.3 dev v-lbaas
 sudo ip link set v-lbaas-vlan up
 sudo ip link set v-lbaas up
 EOT
@@ -89,7 +89,7 @@ br-ex v-lbaas-vlan tag=$OCTAVIA_MGMT_VLAN_ID
 sudo tee /usr/local/bin/veth-lbaas.sh << EOT
 #!/bin/bash
 sudo ip link add v-lbaas-vlan type veth peer name v-lbaas
-sudo ip addr add 172.18.241.4 dev v-lbaas
+sudo ip addr add 172.16.10.4 dev v-lbaas
 sudo ip link set v-lbaas-vlan up
 sudo ip link set v-lbaas up
 EOT
